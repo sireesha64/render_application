@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from app.similarity import recommend_posts
+from similarity import recommend_posts
 
 app = FastAPI()
 
@@ -27,4 +27,3 @@ def get_feed(user_id: int):
         }
     
 
-    
