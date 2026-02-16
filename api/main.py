@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from similarity import recommend_posts
+from app.similarity import recommend_posts
 
 app = FastAPI()
 
