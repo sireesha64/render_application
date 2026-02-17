@@ -100,18 +100,28 @@ if st.button("Get Recommendations"):
         st.error("No recommendations found.")
 '''
 
-
 import streamlit as st
 import requests
 
-API_URL = "http://127.0.0.1:8000"
+st.title("📱 Personalized Feed Recommendation System")
 
-user_id = st.number_input("Enter User ID", min_value=1)
+# Use Render backend URL
+API_URL = "https://render-application-1-tnx0.onrender.com"
+
+user_id = st.number_input("Enter User ID", min_value=1, step=1)
 
 if st.button("Recommend"):
     
-    response = requests.get(f"{API_URL}/recommend/{user_id}")
-    
-    if response.status_code == 200:
-        data = response.json()
-        st.write(data)
+    try:
+        response = requests.get(f"{API_URL}/recommend/{user_id}")
+        
+        if response.status_code == 200:
+            data = response.json()
+            st.success("Recommendations:")
+            st.write(data)
+        else:
+            st.error("Failed to fetch recommendations")
+            
+    except Exception as e:
+        st.error(f"Error connecting to server: {e}")
+

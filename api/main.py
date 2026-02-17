@@ -1,3 +1,4 @@
+'''
 from fastapi import FastAPI
 from app.similarity import recommend_posts
 
@@ -25,5 +26,21 @@ def get_feed(user_id: int):
             "status": "error",
             "message": str(e)
         }
-    
+'''
+
+import pickle
+from fastapi import FastAPI
+from models.recommender import FeedRecommender
+
+app = FastAPI()
+
+similarity = pickle.load(open("saved_models/similarity.pkl", "rb"))
+interaction = pickle.load(open("saved_models/interaction.pkl", "rb"))
+posts = pickle.load(open("saved_models/posts.pkl", "rb"))
+
+recommender = FeedRecommender(similarity, interaction, posts)
+
+@app.get("/recommend/{user_id}")
+def recommend(user_id: int):
+    return recommender.recommend(user_id)
 
