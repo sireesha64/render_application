@@ -1,4 +1,4 @@
-
+'''
 import streamlit as st
 from similarity import recommend_posts
 
@@ -98,3 +98,20 @@ if st.button("Get Recommendations"):
 
     else:
         st.error("No recommendations found.")
+'''
+
+
+import streamlit as st
+import requests
+
+API_URL = "http://127.0.0.1:8000"
+
+user_id = st.number_input("Enter User ID", min_value=1)
+
+if st.button("Recommend"):
+    
+    response = requests.get(f"{API_URL}/recommend/{user_id}")
+    
+    if response.status_code == 200:
+        data = response.json()
+        st.write(data)
